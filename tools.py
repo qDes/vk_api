@@ -32,3 +32,10 @@ def fetch_xkcd_image_url(num):
     xkcd = response.json()
     image_url = xkcd.get("img")
     return image_url
+
+
+def fetch_last_xkcd_number():
+    url = "https://xkcd.com/info.0.json"
+    response = get_response(url).json()
+    last_num = response.get("num")
+    return last_num
