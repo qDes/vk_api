@@ -31,3 +31,5 @@ if __name__ == "__main__":
         post_random_xkcd_to_vk(access_token, group_id)
     except VkError as e:
         print("Ошибка:", e)
+    finally:
+        os.remove("xkcd.jpg")
