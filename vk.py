@@ -8,8 +8,10 @@ class VkError(Exception):
 
 
 def get_wall_upload_server(token, group_id):
-    # https://vk.com/dev/photos.getWallUploadServer
-    url = "https://api.vk.com/method/photos.getWallUploadServer?"
+    ''' vk.com API photos.getWallUploadServer method description:
+    https://vk.com/dev/photos.getWallUploadServer
+    '''
+    url = "https://api.vk.com/method/photos.getWallUploadServer"
     payload = {"group_id": group_id, "access_token": token, "v": 5.103}
     upload_server = get_response(url, payload).json()
     if upload_server.get("error"):
@@ -28,11 +30,13 @@ def get_wall_upload_server(token, group_id):
 
 
 def save_wall_photo(token, group_id, upload_server):
-    # https://vk.com/dev/photos.saveWallPhoto
+    ''' vk.com API photos.saveWallPhoto method description:
+         https://vk.com/dev/photos.saveWallPhoto
+    '''
     server = upload_server.get("server")
     photo = upload_server.get("photo")
     hash_ = upload_server.get("hash")
-    url = "https://api.vk.com/method/photos.saveWallPhoto?"
+    url = "https://api.vk.com/method/photos.saveWallPhoto"
     payload = {
         "access_token": token,
         "group_id": group_id,
@@ -51,10 +55,12 @@ def save_wall_photo(token, group_id, upload_server):
 
 
 def upload_photo_wall(token, group_id, save_wall):
-    # https://vk.com/dev/wall.post
+    ''' vk.com API wall.post method description:
+        https://vk.com/dev/wall.post
+    '''
     owner_id = save_wall.get("owner_id")
     photo_id = save_wall.get("id")
-    wall_post_url = "https://api.vk.com/method/wall.post?"
+    wall_post_url = "https://api.vk.com/method/wall.post"
     pay_load = {
         "owner_id": f"-{group_id}",
         "from_group": 1,
@@ -66,5 +72,4 @@ def upload_photo_wall(token, group_id, save_wall):
     if response.get("error"):
         error_msg = response.get("error").get("error_msg")
         raise VkError(error_msg)
-
     return response
